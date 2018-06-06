@@ -2,7 +2,7 @@
 
 This bot is a fork of https://github.com/bwentzloff/trading-bot by User bwentzloff
 
-This is learning tool and the current State is Experimental. 
+This is a Learning and Analysis tool and the current State is Experimental. 
 
 The characteristics that make this Bot different is that it uses Meshs as overlays for predictive
 Buy/Sell/Hold Actions. Many other bots use simple Candlestick Methods but the Algorithms
