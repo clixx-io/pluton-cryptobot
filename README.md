@@ -28,10 +28,13 @@ Extrapolation Graphs using these Adjusters.
 
 Libraries used on this Project include:
 
-| FrameWork | Description                              |
-| --------- | ---------------------------------------- |
-| Pandas    | Data Analytics Framework                 |
-| cryptocmd | Used to Download Historical Data         |
+| FrameWork  | Description                              |
+| ---------- | ---------------------------------------- |
+| Pandas     | Data Analytics Framework                 |
+| Matplotlib | 2D plotting library for Graph Generation |
+| cryptocmd  | Used to Download Historical Data         |
+| cheetah    | Reporting and Html templating engine     |
+| PyTables   | HDF5 format for Data Storage             |
 
 Backtesting is supported using Cryptocmd. More backtesting and using other exchanges and live trading are planned.
 
