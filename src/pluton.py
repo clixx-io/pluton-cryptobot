@@ -1,19 +1,31 @@
-#!/usr/bin/python
-import argparse
-from appdirs import *
-import configparser
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# __author__ = 'David Lyon'
+
+"""
+Pluton CryptoBot cmdline Interface
+"""
+
 import os
+import argparse
+import configparser
+from datetime import datetime,timedelta,date
+from pandas import read_hdf
+from appdirs import *
 
 appname = "Pluton"
 appauthor = "Clixx.io Pty Limited"
 appconfig = "pluton.ini"
+apph5data = "pluton.h5"
 
 appdatadir= user_data_dir(appname, appauthor)
 if not os.path.exists(appdatadir):
     print("Creating directory %s for configuration file" % appdatadir)
     os.makedirs(appdatadir)
-    
+
 appfullconfig = os.path.join(appdatadir,appconfig)
+apph5datafile = os.path.join(appdatadir,apph5data)
+
 config = configparser.ConfigParser(allow_no_value=True)
 config.read(appfullconfig)
 
@@ -23,7 +35,9 @@ def coinList(coincodes):
     Keyword arguments:
     coincodes -- '*' (Default) or a set of CoinCode strings.
     """
-        
+    
+    global config
+    
     if coincodes == '*':
         print("You asked to list all tracked coins")
     else:
@@ -44,6 +58,7 @@ def addCoins(coincodes):
     """
         
     global appdatadir
+    global config
     activecoins = ""
 	
     print("You asked to add a coin %s" % (coincode))
@@ -71,6 +86,7 @@ def deleteCoins(coincodes):
     """
     
     global appdatadir
+    global config
     activecoins = ""
 	
     print("You asked to delete coin(s) %s" % (coincode))
@@ -92,6 +108,60 @@ def deleteCoins(coincodes):
         config.write(configfile)
     
     return
+    	
+def coinWeek(coincodes):
+    """Display the last week of a set of Coins
+
+    Keyword arguments:
+    coincodes -- '*' (Default) or a set of CoinCode strings.
+    """
+        
+    global config
+    
+    coinlist = []
+    
+    if coincodes == '*':
+        print("You asked to list the last week for all tracked coins")
+        coinlist = config.get('Active','Coins').split(' ')
+    else:
+        coinlist = coincodes
+        print("You asked to list the last week for coins %s" % (coinlist))
+        
+    try:
+		
+        for coin in coinlist:
+			
+             hdf = read_hdf('pluton.h5',coin.upper())
+             
+             hdf['date_ranked'] = hdf['Date'].rank(ascending=1)
+             
+             print("-------------------------------------------------------\n"
+                   "%s\n"
+                   "-------------------------------------------------------\n"
+                   % coin.upper())
+                
+             print hdf.head(7)
+             print
+		
+    except KeyError:
+        print "There are currently No Coins recorded in the Configuration for Tracking"
+        
+    return
+
+def showConfig():
+    """Display the configuration
+
+    Keyword arguments:
+    """
+
+    global appfullconfig,apph5datafile
+    	    
+    print("Using configuration file : %s" % (appfullconfig))
+
+    h5found = "[exists]" if os.path.exists(apph5datafile) else "[not found]"
+    print("Pandas H5 Data store     : %s %s" % (apph5datafile,h5found))
+
+    return        
     	
 if __name__ == "__main__":
 
@@ -124,8 +194,10 @@ if __name__ == "__main__":
         print("Error: Not implemented")
     elif args.action == "list":
         coinList(coincode)
+    elif args.action == "week":
+        coinWeek(coincode)
     elif args.action == "config":
-        print("Using configuration file %s" % (appfullconfig))
+		showConfig()
     else:
         print("You asked for something that isnt supported.")
         
