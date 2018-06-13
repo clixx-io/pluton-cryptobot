@@ -131,7 +131,7 @@ def coinWeek(coincodes):
 		
         for coin in coinlist:
 			
-             hdf = read_hdf('pluton.h5',coin.upper())
+             hdf = read_hdf(apph5datafile,coin.upper())
              
              hdf['date_ranked'] = hdf['Date'].rank(ascending=1)
              
@@ -154,7 +154,7 @@ def showConfig():
     Keyword arguments:
     """
 
-    global appfullconfig,apph5datafile
+    global appfullconfig, apph5datafile
     	    
     print("Using configuration file : %s" % (appfullconfig))
 
@@ -199,6 +199,20 @@ if __name__ == "__main__":
     elif args.action == "config":
 		showConfig()
     else:
-        print("You asked for something that isnt supported.")
+        print("""You asked for something that isnt supported.
+        
+Commands:        
+    add <coincode> [coincode] ..      - Add one or more Coincodes
+    delete <coincode> [coincode] ..   - Delete one or more Coincodes
+    analyse <coincode> [coincode] ..  - Analyse one or more Coincodes
+    graph <coincode> [coincode] ..    - Graph one or more Coincodes
+    scan <coincode> [coincode] ..     - Scan one or more Coincodes
+    log <coincode> [coincode] ..      - Display the log of one or more Coincodes
+    update <coincode> [coincode] ..   - Update data of one or more Coincodes
+    list                              - List tracked Coincodes 
+    week <coincode> [coincode]        - Display the last weeks activity
+    config                            - Display the configuration
+        
+        """)
         
 	
