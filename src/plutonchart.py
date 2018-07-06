@@ -46,6 +46,7 @@ def chartCoins(coinCodes):
 
     for coin in coinList:
 
+        hdf = None
         havecointable = True
         
         if not os.path.exists(apph5datafile):
@@ -53,30 +54,29 @@ def chartCoins(coinCodes):
             havecointable = False
             return
 
-        if havecointable:
+        try:
+            print("Loading Datafile %s" % apph5datafile)
+            hdf = read_hdf(apph5datafile,coin.upper())
 
-            try:
-                hdf = read_hdf(apph5datafile,coin)
+            hdf['date_ranked']=hdf['Date'].rank(ascending=1)
+            print "Last element from %s is dated %s" % (coin,str(hdf.at[0,'Date'])[:10])
+            lastdate = datetime.strptime(str(hdf.at[0,'Date'])[:10],"%Y-%m-%d")
+            nextday = timedelta(1)
+            nextday = lastdate + nextday
+            delta = (datetime.today() - timedelta(1)) - nextday
+            print("Difference from yesterday to last update ", delta)
 
-                hdf['date_ranked']=hdf['Date'].rank(ascending=1)
-                print "Last element from %s is dated %s" % (coin,str(hdf.at[0,'Date'])[:10])
-                lastdate = datetime.strptime(str(hdf.at[0,'Date'])[:10],"%Y-%m-%d")
-                nextday = timedelta(1)
-                nextday = lastdate + nextday
-                delta = (datetime.today() - timedelta(1)) - nextday
-                print("Difference from yesterday to last update ", delta)
+        except KeyError:
+            print("No data found for this Coin. Have you ran plutonscrape.py ?")
+            nextday = (datetime.today() - timedelta(2*365))
+            continue
 
-            except KeyError:
-                print("No data found for this Coin")
-                nextday = (datetime.today() - timedelta(2*365))
+        lastdate = datetime.today() - timedelta(1)
 
-            lastdate = datetime.today() - timedelta(1)
+        startdate = '{:%d-%m-%Y}'.format(nextday)
+        enddate = '{:%d-%m-%Y}'.format(lastdate)
 
-            startdate = '{:%d-%m-%Y}'.format(nextday)
-            enddate = '{:%d-%m-%Y}'.format(lastdate)
-
-            print "Graphing data from %s to %s" % (str(nextday),str(lastdate))
-
+        print "Graphing data from %s to %s" % (str(nextday),str(lastdate))
 
         # Graph all data in the list
         try:
