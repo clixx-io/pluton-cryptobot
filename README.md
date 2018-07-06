@@ -1,5 +1,8 @@
 # Pluton Cryptocurrency Trading Bot
 
+## Screenshots
+![Screenshot](https://github.com/clixx-io/pluton-cryptobot/raw/master/doc/images/2018-07-06-182650.png)
+
 This bot is a fork of bwentzloff's project https://github.com/bwentzloff/trading-bot to
 build a CryptoBot with Deep Statistical using Data Analysis Tools of Scientific Quality.
 
