@@ -1,7 +1,7 @@
 Ubuntu
 
 sudo apt-get install python-dev
-sudo pip install tables
+sudo pip install tables six
 
 RaspberryPi
 
