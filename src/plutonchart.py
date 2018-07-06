@@ -89,6 +89,7 @@ def chartCoins(coinCodes):
             plt.plot(dates,data)
             plt.xticks(rotation='vertical')
             plt.title("Graph for %s" % coin)
+            plt.grid(True)
             plt.show()
 
         except ValueError:
