@@ -83,10 +83,12 @@ def chartCoins(coinCodes):
 
             # Get the data
             data = hdf['High']
+            dates = hdf['Date']
 
             # get dataframe for the data
-            plt.plot(data)
-            plt.ylabel("Graph for %s" % coin)
+            plt.plot(dates,data)
+            plt.xticks(rotation='vertical')
+            plt.title("Graph for %s" % coin)
             plt.show()
 
         except ValueError:
