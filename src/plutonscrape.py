@@ -85,12 +85,10 @@ def updateCoins(coinCodes):
 
             lastdate = datetime.today() - timedelta(1)
 
-            print "We need to request from %s to %s" % (str(nextday),str(lastdate))
+            print "Updating data from %s to %s" % (str(nextday),str(lastdate))
 
             startdate = '{:%d-%m-%Y}'.format(nextday)
             enddate = '{:%d-%m-%Y}'.format(lastdate)
-
-            print "Requesting data from", startdate, enddate
 
             scraper = CmcScraper(coin,startdate,enddate)
 
