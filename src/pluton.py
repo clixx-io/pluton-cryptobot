@@ -166,7 +166,7 @@ def showConfig():
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", help="The Action to take")
+    parser.add_argument("action", help="Actions: list, add [coins], delete [coins], week, config")
     parser.add_argument("coin", metavar='Coin', nargs='*',help="Coin Code",default='*')
 	
     args = parser.parse_args()

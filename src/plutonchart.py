@@ -88,7 +88,7 @@ def chartCoins(coinCodes):
             # get dataframe for the data
             plt.plot(dates,data)
             plt.xticks(rotation='vertical')
-            plt.title("Graph for %s" % coin)
+            plt.title("Graph for %s" % coin.upper())
             plt.grid(True)
             plt.show()
 
