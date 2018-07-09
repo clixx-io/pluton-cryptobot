@@ -40,10 +40,8 @@ def chartCoins(coinCodes):
         coinList = config.get('Active','Coins').split(' ')
     else:
         coinList = coinCodes
-        print("You asked to list the last week for coins %s" % (coinList))
+        print("You asked to chart the coins %s" % (coinList))
    
-    print("You asked to chart coins %s" % (coinList))
-
     for coin in coinList:
 
         hdf = None
@@ -64,7 +62,6 @@ def chartCoins(coinCodes):
             nextday = timedelta(1)
             nextday = lastdate + nextday
             delta = (datetime.today() - timedelta(1)) - nextday
-            print("Difference from yesterday to last update ", delta)
 
         except KeyError:
             print("No data found for this Coin. Have you ran plutonscrape.py ?")
@@ -82,8 +79,7 @@ def chartCoins(coinCodes):
         try:
 
             # Get the data
-            data = hdf['High']
-            dates = hdf['Date']
+            dates,data = hdf['Date'], hdf['High']
 
             # get dataframe for the data
             plt.plot(dates,data)
