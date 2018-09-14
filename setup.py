@@ -8,7 +8,7 @@ setup(name='Pluton',
       author='David Lyon',
       author_email='david.lyon@clixx.io',
       url='https://www.python.org/sigs/distutils-sig/',
-      packages=['pandas', 'matplotlib','cryptocmd','cheetah','pytable','appdirs','configparser'],
-      scripts=['src/pluton'],
+      install_requires=['pandas', 'matplotlib','cryptocmd','cheetah','pytable','appdirs','configparser'],
+      scripts=['src/pluton.py'],
      )
      
