@@ -6,12 +6,10 @@
 Pluton CryptoBot cmdline Interface
 """
 
-import os
-import argparse
-import configparser
+import os, argparse, configparser
+from appdirs import *
 from datetime import datetime,timedelta,date
 from pandas import read_hdf
-from appdirs import *
 
 appname = "Pluton"
 appauthor = "Clixx.io Pty Limited"
@@ -155,8 +153,9 @@ def showConfig():
     """
 
     global appfullconfig, apph5datafile
-    	    
-    print("Using configuration file : %s" % (appfullconfig))
+
+    cfgfound = "[exists]" if os.path.exists(appfullconfig) else "[not found]"    	    
+    print("Using configuration file : %s %s" % (appfullconfig,cfgfound))
 
     h5found = "[exists]" if os.path.exists(apph5datafile) else "[not found]"
     print("Pandas H5 Data store     : %s %s" % (apph5datafile,h5found))
@@ -168,6 +167,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("action", help="Actions: list, add [coins], delete [coins], week, config")
     parser.add_argument("coin", metavar='Coin', nargs='*',help="Coin Code",default='*')
+    parser.add_argument("--config", default=appfullconfig, help="Specify the Configuration file to use")
 	
     args = parser.parse_args()
 	
